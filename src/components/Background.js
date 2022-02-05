@@ -3,7 +3,9 @@ import {
   ImageBackground,
   StyleSheet,
   KeyboardAvoidingView,
+  View,
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 import { theme } from "../components/theme";
 
@@ -14,9 +16,9 @@ export default function Background({ children }) {
       resizeMode="cover"
       style={styles.background}
     >
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
+      <View style={styles.container} behavior="padding">
         {children}
-      </KeyboardAvoidingView>
+      </View>
     </ImageBackground>
   );
 }
