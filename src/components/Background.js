@@ -4,13 +4,14 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
 } from "react-native";
-import { DefaultTheme } from "react-native-paper";
+
+import { theme } from "../components/theme";
 
 export default function Background({ children }) {
   return (
     <ImageBackground
-      source={require("../assets/background_dot.png")}
-      resizeMode="repeat"
+      source={require("../assets/background.png")}
+      resizeMode="cover"
       style={styles.background}
     >
       <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -24,7 +25,7 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     width: "100%",
-    backgroundColor: DefaultTheme.colors.surface,
+    backgroundColor: theme.colors.surface,
   },
   container: {
     flex: 1,

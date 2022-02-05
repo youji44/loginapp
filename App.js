@@ -6,12 +6,13 @@ import Login from "./src/screens/Login";
 import Start from "./src/screens/Start";
 import Home from "./src/screens/Home";
 import Register from "./src/screens/Register";
+import { theme } from "./src/components/theme";
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <Provider>
+    <Provider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="Start"

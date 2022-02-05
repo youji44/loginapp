@@ -1,13 +1,24 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Background from "../components/Background";
+import Header from "../components/Header";
+import Button from "../components/Button";
 
 export default function Home({ navigation }) {
   return (
     <Background>
-      <Text>Hello World!</Text>
-      <StatusBar style="auto" />
+      <Header>Hello World!</Header>
+      <Button
+        mode="outlined"
+        onPress={() =>
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "Start" }],
+          })
+        }
+      >
+        Logout
+      </Button>
     </Background>
   );
 }
