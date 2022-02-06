@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import Background from "../components/Background";
 import Header from "../components/Header";
@@ -15,23 +16,31 @@ import { theme } from "../components/theme";
 import { useState } from "react";
 import { emailValidator } from "../utils/emailValidator";
 import { passwordValidator } from "../utils/passwordValidator";
+import { getEmail, getPassword, saveLogin } from "../utils/storage";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
 
   const onLoginPressed = () => {
-    // const emailError = emailValidator(email.value);
-    // const passwordError = passwordValidator(password.value);
-    // if (emailError || passwordError) {
-    //   setEmail({ ...email, error: emailError });
-    //   setPassword({ ...password, error: passwordError });
-    //   return;
-    // }
+    const emailError = emailValidator(email.value);
+    const passwordError = passwordValidator(password.value);
+    if (emailError || passwordError) {
+      setEmail({ ...email, error: emailError });
+      setPassword({ ...password, error: passwordError });
+      return;
+    }
+    //if (email.value != getEmail() && password.value != getPassword()) {
     navigation.reset({
       index: 0,
       routes: [{ name: "Home" }],
     });
+    //} else {
+    //   Alert.alert(
+    //     "Login",
+    //     "Email or Password is incorrect. Don't you have account?"
+    //   );
+    // }
   };
 
   return (

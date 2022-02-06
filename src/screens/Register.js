@@ -20,27 +20,34 @@ import {
   registerTranslation,
 } from "react-native-paper-dates";
 import { nameValidator } from "../utils/nameValidator";
+import { surnameValidator } from "../utils/surnameValidator";
 import { emailValidator } from "../utils/emailValidator";
 import { passwordValidator } from "../utils/passwordValidator";
+import { getLogin, saveLogin, saveUser } from "../utils/storage";
 
 registerTranslation("en-GB", enGB);
 
 export default function Register({ navigation }) {
   const [name, setName] = useState({ value: "", error: "" });
+  const [surname, setSurname] = useState({ value: "", error: "" });
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
   const [birth, setInputDate] = useState({ value: "", error: "" });
 
   const onSignUpPressed = () => {
     const nameError = nameValidator(name.value);
+    const surnameError = surnameValidator(surname.value);
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
-    if (emailError || passwordError || nameError) {
+
+    if (emailError || passwordError || nameError || surnameError) {
       setName({ ...name, error: nameError });
+      setSurname({ ...surname, error: surnameError });
       setEmail({ ...email, error: emailError });
       setPassword({ ...password, error: passwordError });
       return;
     }
+
     navigation.reset({
       index: 0,
       routes: [{ name: "Home" }],
@@ -63,10 +70,10 @@ export default function Register({ navigation }) {
         <TextInput
           label="Surname"
           returnKeyType="next"
-          value={name.value}
-          onChangeText={(text) => setName({ value: text, error: "" })}
-          error={!!name.error}
-          errorText={name.error}
+          value={surname.value}
+          onChangeText={(text) => setSurname({ value: text, error: "" })}
+          error={!!surname.error}
+          errorText={surname.error}
         />
 
         {/* <DatePickerInput

@@ -7,15 +7,16 @@ import Start from "./src/screens/Start";
 import Home from "./src/screens/Home";
 import Register from "./src/screens/Register";
 import { theme } from "./src/components/theme";
+import { getLogin } from "./src/utils/storage";
 
 const Stack = createStackNavigator();
-
+const login = "";
 export default function App() {
   return (
     <Provider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="Start"
+          initialRouteName={login == "login" ? "Home" : "Start"}
           screenOptions={{
             headerShown: false,
           }}
