@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useState } from "react";
+import { IconButton } from "react-native-paper";
 import Background from "../components/Background";
 import Header from "../components/Header";
 import TextInput from "../components/TextInput";
