@@ -24,6 +24,7 @@ import { surnameValidator } from "../utils/surnameValidator";
 import { emailValidator } from "../utils/emailValidator";
 import { passwordValidator } from "../utils/passwordValidator";
 import { getLogin, saveLogin, saveUser } from "../utils/storage";
+import { signUpUser } from "../api/api";
 
 registerTranslation("en-GB", enGB);
 
@@ -33,8 +34,9 @@ export default function Register({ navigation }) {
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
   const [birth, setInputDate] = useState({ value: "", error: "" });
+  const [loading, setLoading] = useState();
 
-  const onSignUpPressed = () => {
+  const onSignUpPressed = async () => {
     const nameError = nameValidator(name.value);
     const surnameError = surnameValidator(surname.value);
     const emailError = emailValidator(email.value);
@@ -48,10 +50,25 @@ export default function Register({ navigation }) {
       return;
     }
 
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "Home" }],
+    setLoading(true);
+    const response = await signUpUser({
+      name: name.value,
+      surname: surname.value,
+      email: email.value,
+      password: password.value,
     });
+    setLoading(false);
+    if (!response.error && response.data.result) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Home" }],
+      });
+    } else {
+      Alert.alert(
+        "Register",
+        response.data.message ?? "Failed register a user."
+      );
+    }
   };
 
   return (
@@ -108,6 +125,7 @@ export default function Register({ navigation }) {
           secureTextEntry
         />
         <Button
+          loading={loading}
           mode="contained"
           onPress={onSignUpPressed}
           style={{ marginTop: 24 }}

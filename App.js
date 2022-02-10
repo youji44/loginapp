@@ -7,10 +7,10 @@ import Start from "./src/screens/Start";
 import Home from "./src/screens/Home";
 import Register from "./src/screens/Register";
 import { theme } from "./src/components/theme";
-import { getLogin } from "./src/utils/storage";
+import { getEmail, getLogin, runWithCatch } from "./src/utils/storage";
 
 const Stack = createStackNavigator();
-const login = "";
+const login = ""; //getEmail();
 export default function App() {
   return (
     <Provider theme={theme}>

@@ -16,13 +16,14 @@ import { theme } from "../components/theme";
 import { useState } from "react";
 import { emailValidator } from "../utils/emailValidator";
 import { passwordValidator } from "../utils/passwordValidator";
-import { getEmail, getPassword, saveLogin } from "../utils/storage";
+import { loginUser } from "../api/api";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState({ value: "", error: "" });
   const [password, setPassword] = useState({ value: "", error: "" });
+  const [loading, setLoading] = useState();
 
-  const onLoginPressed = () => {
+  const onLoginPressed = async () => {
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
     if (emailError || passwordError) {
@@ -30,17 +31,23 @@ export default function Login({ navigation }) {
       setPassword({ ...password, error: passwordError });
       return;
     }
-    //if (email.value != getEmail() && password.value != getPassword()) {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "Home" }],
+    setLoading(true);
+    const response = await loginUser({
+      email: email.value,
+      password: password.value,
     });
-    //} else {
-    //   Alert.alert(
-    //     "Login",
-    //     "Email or Password is incorrect. Don't you have account?"
-    //   );
-    // }
+    setLoading(false);
+    if (!response.error && response.data.access_token) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Home" }],
+      });
+    } else {
+      Alert.alert(
+        "Login",
+        "Email or Password is incorrect. Don't you have account?"
+      );
+    }
   };
 
   return (
@@ -69,7 +76,7 @@ export default function Login({ navigation }) {
           errorText={password.error}
           secureTextEntry
         />
-        <Button mode="contained" onPress={onLoginPressed}>
+        <Button loading={loading} mode="contained" onPress={onLoginPressed}>
           Login
         </Button>
         <View style={styles.row}>
