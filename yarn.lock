@@ -1350,8 +1350,8 @@
     "fastq" "^1.6.0"
 
 "@react-native-async-storage/async-storage@github:react-native-async-storage/async-storage":
-  "resolved" "git+ssh://git@github.com/react-native-async-storage/async-storage.git#49cdfa4e1373125ac5fa220ad7d39f8d161e4948"
-  "version" "1.15.17"
+  "resolved" "git+ssh://git@github.com/react-native-async-storage/async-storage.git#276e222ee5057dc4309b3976ab243c703be5121e"
+  "version" "1.16.1"
   dependencies:
     "merge-options" "^3.0.4"
 

@@ -6,21 +6,21 @@ import Login from "./src/screens/Login";
 import Start from "./src/screens/Start";
 import Home from "./src/screens/Home";
 import Register from "./src/screens/Register";
+import AuthLoading from "./src/screens/AuthLoading";
 import { theme } from "./src/components/theme";
-import { getEmail, getLogin, runWithCatch } from "./src/utils/storage";
 
 const Stack = createStackNavigator();
-const login = ""; //getEmail();
 export default function App() {
   return (
     <Provider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName={login == "login" ? "Home" : "Start"}
+          initialRouteName={"AuthLoading"}
           screenOptions={{
             headerShown: false,
           }}
         >
+          <Stack.Screen name="AuthLoading" component={AuthLoading} />
           <Stack.Screen name="Start" component={Start} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
