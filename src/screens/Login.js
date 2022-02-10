@@ -17,6 +17,7 @@ import { useState } from "react";
 import { emailValidator } from "../utils/emailValidator";
 import { passwordValidator } from "../utils/passwordValidator";
 import { loginUser } from "../api/api";
+import { AsyncStorage } from "react-native";
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState({ value: "", error: "" });
@@ -38,10 +39,22 @@ export default function Login({ navigation }) {
     });
     setLoading(false);
     if (!response.error && response.data.access_token) {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "Home" }],
-      });
+      storeData = async () => {
+        try {
+          await AsyncStorage.setItem(
+            "@access_token",
+            response.data.access_token
+          );
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "Home" }],
+          });
+        } catch (e) {
+          // saving error
+          console.log("save error:" + e.message);
+        }
+      };
+      storeData();
     } else {
       Alert.alert(
         "Login",

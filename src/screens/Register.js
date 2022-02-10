@@ -24,9 +24,8 @@ import { nameValidator } from "../utils/nameValidator";
 import { surnameValidator } from "../utils/surnameValidator";
 import { emailValidator } from "../utils/emailValidator";
 import { passwordValidator } from "../utils/passwordValidator";
-import { getLogin, saveLogin, saveUser } from "../utils/storage";
 import { signUpUser } from "../api/api";
-
+import { AsyncStorage } from "react-native";
 registerTranslation("en-GB", enGB);
 
 export default function Register({ navigation }) {
@@ -60,7 +59,8 @@ export default function Register({ navigation }) {
     });
     setLoading(false);
     if (!response.error && response.data.result) {
-      navigation.reset({
+      await AsyncStorage.setItem("@access_token", response.data.access_token);
+      await navigation.reset({
         index: 0,
         routes: [{ name: "Home" }],
       });
